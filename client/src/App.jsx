@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 import { BiAddToQueue, BiMessageSquareAdd } from "react-icons/bi";
-import { MdDeleteOutline } from "react-icons/md";
 import "./App.css";
 import Task from "./components/Task";
 import Alert from "./components/alert";

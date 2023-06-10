@@ -85,7 +85,7 @@ export default function Task({ content, id, rerender }) {
       <ul>
         <li>
           <span
-            className={content.length > 30 && "over"}
+            className={content.length > 30 ? "over" : ""}
             data-tooltip={content}
           >
             {content}
