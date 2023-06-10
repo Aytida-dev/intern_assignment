@@ -8,9 +8,11 @@ import "./task.css";
 export default function Task({ content, id, rerender }) {
   const [updateTask, setUpdateTask] = useState(content);
   const [warn, setWarn] = useState("");
+  const [loading, setLoading] = useState("");
   const dialogRef = useRef(null);
 
   const handleDelete = async () => {
+    setLoading("Deleting task...");
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/task/deleteTask/${id}`,
       {
@@ -22,11 +24,13 @@ export default function Task({ content, id, rerender }) {
       setWarn("error while deleting task please try again");
       return;
     }
+    setLoading("");
     rerender();
   };
 
-  const handleUpdate = async () => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
+    setLoading("Updating task...");
     if (updateTask.length > 255) {
       setWarn("task length should be less than 255 characters");
       return;
@@ -45,6 +49,7 @@ export default function Task({ content, id, rerender }) {
       return;
     }
     dialogRef.current.close();
+    setLoading("");
     rerender();
   };
 
@@ -68,6 +73,7 @@ export default function Task({ content, id, rerender }) {
   return (
     <div className="task">
       {warn && <Alert message={warn} />}
+      {loading && <Alert message={loading} status="success" />}
       <dialog ref={dialogRef} onClick={(e) => handleBackDropClick(e)}>
         <form>
           <textarea

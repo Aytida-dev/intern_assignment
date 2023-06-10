@@ -9,6 +9,7 @@ function App() {
   const [taskList, setTaskList] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [warn, setWarn] = useState("");
+  const [loading, setLoading] = useState("");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -17,6 +18,7 @@ function App() {
   }, []);
 
   async function fetchData(signal) {
+    setLoading("Fetching tasks...");
     const response = await fetch(
       `${import.meta.env.VITE_API_URL}/task/allTasks`,
       signal ? { signal } : null
@@ -30,12 +32,14 @@ function App() {
     } else {
       setWarn("error while fetching tasks please try again");
     }
+    setLoading("");
   }
 
   const dialogRef = useRef();
 
   const handleAddTask = async (e) => {
     e.preventDefault();
+    setLoading("Adding task...");
     if (newTask.length > 255) {
       setWarn("task length should be less than 255 characters");
       return;
@@ -60,6 +64,7 @@ function App() {
     dialogRef.current.close();
     setTaskList(newTaskList);
     setNewTask("");
+    setLoading("");
   };
 
   const handleDiscard = (e) => {
@@ -81,6 +86,7 @@ function App() {
   return (
     <div className="app">
       {warn && <Alert message={warn} />}
+      {loading && <Alert message={loading} status="success" />}
       <dialog ref={dialogRef} onClick={(e) => handleBackDropClick(e)}>
         <form>
           <textarea
