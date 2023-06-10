@@ -1,0 +1,43 @@
+.buttonGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 1rem;
+}
+
+.buttonGroup button:nth-of-type(1) {
+  background-color: #61dafb35;
+  height: 40px;
+}
+
+.buttonGroup button:nth-of-type(2) {
+  background-color: #ff000035;
+}
+
+.task span {
+  display: block;
+  max-width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.task .over:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: -40px; /* Adjust the distance from the content */
+  left: 50%; /* Adjust the position of the dialog box */
+  transform: translateX(-50%);
+  background-color: #f1f1f186;
+  color: #000;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
+  font-size: 14px;
+  z-index: 1;
+}
